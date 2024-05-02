@@ -6,13 +6,13 @@ import { routes } from "./route";
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-export const app = express();
+const app = express();
 const server = http.createServer(app);
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(  cors({ origin: "*"}));
+app.use(cors({ origin: "*" }));
 
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "application/json");
@@ -31,25 +31,21 @@ app.use((req, res, next) => {
 const PORT = 3000;
 export const TOKEN_KEY = "11223344";
 routes(app);
-const URL = "mongodb+srv://wwwburjsoft:gBLTbWrZsDYS9kR5@cluster0.k2bwmju.mongodb.net/";
-
-// mongoose.connect(url)
-//   .then(() => {
-//     console.log("Connected to database!", url);
-//   }).catch((error) => {
-//     console.log("Connection failed!:", error);
-//   });
+const URL =
+  "mongodb+srv://wwwburjsoft:gBLTbWrZsDYS9kR5@cluster0.k2bwmju.mongodb.net/";
 
 server.listen(PORT, () => {
   console.log(`Express server listening ${PORT}`);
-  app.get('/', function (req, res) {
-    res.send('**** Hello World! ****');
+  app.get("/", function (req, res) {
+    res.send("**** Hello World! ****");
   });
 });
 
 async function connection() {
   await mongoose.connect(URL).then(() => {
-    console.log("connection sucees")
-  })
+    console.log("connection success");
+  });
 }
 connection();
+
+export default app;
